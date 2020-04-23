@@ -1,0 +1,35 @@
+:root {
+  --dice-size: 50px;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.row {
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  height: 10px;
+  margin: 1em;
+  width: 10px;
+}
+
+.token {
+  background: red;
+  height: 10px;
+  width: 10px;
+}
+
+.player {
+  align-items: center;
+  display: flex;
+  margin: 1em;
+}
+
+.dice {
+  border: 1px solid black;
+  height: var(--dice-size);
+  margin: 1em;
+  width: var(--dice-size);
+}
