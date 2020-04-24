@@ -5,15 +5,17 @@ import { getDiceNumber } from "../utils/game";
 function Dice({ onGet, disabled }) {
   const [number, setNumber] = useState(1);
 
-  const onClick = event => {
-    const newNumber = getDiceNumber();
-
-    setNumber(() => newNumber);
-    onGet(newNumber);
-  };
-
   return (
-    <button disabled={disabled} onClick={onClick} className="dice">
+    <button
+      disabled={disabled}
+      onClick={() => {
+        const newNumber = getDiceNumber();
+        onGet(newNumber);
+
+        setNumber(newNumber);
+      }}
+      className="dice"
+    >
       {number}
     </button>
   );
