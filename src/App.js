@@ -43,7 +43,7 @@ export default function App() {
 
             setRows((prevRows) => {
               const newRows = [...prevRows];
-              newRows[row].tokens += 1;
+              newRows[row - 1].tokens += 1;
 
               return newRows;
             });
