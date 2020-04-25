@@ -1,22 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { getDiceNumber } from "../utils/game";
 
-function Dice({ onGet, disabled }) {
-  const [number, setNumber] = useState(1);
-
+function Dice({ onGet, disabled, value }) {
   return (
     <button
       disabled={disabled}
-      onClick={() => {
-        const newNumber = getDiceNumber();
-        onGet(newNumber);
-
-        setNumber(newNumber);
-      }}
+      onClick={() => onGet(getDiceNumber())}
       className="dice"
     >
-      {number}
+      {value}
     </button>
   );
 }
