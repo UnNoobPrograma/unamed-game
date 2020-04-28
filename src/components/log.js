@@ -1,10 +1,15 @@
 import React from "react";
 
 export default function Log({ log }) {
+  const messages = [...log];
+  messages.length = 10;
+
   return (
-    <div>
-      {log.map((message, index) => (
-        <div key={index}>{message}</div>
+    <div className="log">
+      {messages.map((message, index) => (
+        <div className={`${message.type} message`} key={index}>
+          {message.text}
+        </div>
       ))}
     </div>
   );

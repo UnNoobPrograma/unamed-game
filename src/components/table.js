@@ -4,7 +4,7 @@ function Table({ rows }) {
   const rowsArray = Object.entries(rows);
 
   return (
-    <div>
+    <div className="table">
       {rowsArray.map((data, index) => {
         const tokensArray = new Array(data[1].tokens).fill(null);
 
@@ -12,10 +12,18 @@ function Table({ rows }) {
           <div
             key={index}
             className="row"
-            style={{ width: `${10 * (index + 1)}px` }}
+            style={{ width: `${50 + 25 * index}px` }}
           >
             {tokensArray.map((data, index) => {
-              return <div key={index} className="token" />;
+              return (
+                <div
+                  key={index}
+                  className="token"
+                  style={{
+                    transform: `translateX(${-25 * index}px)`,
+                  }}
+                />
+              );
             })}
           </div>
         );

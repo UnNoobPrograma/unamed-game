@@ -12,7 +12,10 @@ export default function App() {
 
   return (
     <div className="App">
-      <Table rows={rows} />
+      <div className="table-container">
+        <Table rows={rows} />
+        <Log log={log} />
+      </div>
 
       {players.map((player, index) => (
         <Player
@@ -24,8 +27,6 @@ export default function App() {
           {...player}
         />
       ))}
-
-      <Log log={log} />
     </div>
   );
 }

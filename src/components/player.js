@@ -12,36 +12,38 @@ function Player({ name, tokens, canPlay, onPlay }) {
 
   return (
     <div className="player">
-      <em>{name}</em>
-      <div>Remaining tokens: {tokens}</div>
-      {!showRowSelector && (
-        <Dice
-          disabled={!canPlay}
-          onGet={(number) => {
-            if (number === 6) {
-              setShowRowSelector(true);
-            } else {
-              Play(number);
-              setSelectedNumber(number);
-            }
-          }}
-          value={selectedNumber}
-        />
-      )}
-      {showRowSelector &&
-        [1, 2, 3, 4, 5].map((number) => (
-          <button
-            onClick={() => {
-              Play(number);
-              setSelectedNumber(number);
-              setShowRowSelector(false);
+      <em className="player-name">{name}</em>
+      <div className="player-tokens">Remaining tokens: {tokens}</div>
+      <div className="player-controls">
+        {!showRowSelector && (
+          <Dice
+            disabled={!canPlay}
+            onGet={(number) => {
+              if (number === 6) {
+                setShowRowSelector(true);
+              } else {
+                Play(number);
+                setSelectedNumber(number);
+              }
             }}
-            className="dice"
-            key={number}
-          >
-            {number}
-          </button>
-        ))}
+            value={selectedNumber}
+          />
+        )}
+        {showRowSelector &&
+          [1, 2, 3, 4, 5].map((number) => (
+            <button
+              onClick={() => {
+                Play(number);
+                setSelectedNumber(number);
+                setShowRowSelector(false);
+              }}
+              className="dice"
+              key={number}
+            >
+              {number}
+            </button>
+          ))}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-const initialTokens = 2;
+const initialTokens = 10;
 
 export const initialState = {
   players: [
@@ -11,11 +11,7 @@ export const initialState = {
       tokens: initialTokens,
     },
     {
-      name: "Zeldo",
-      tokens: initialTokens,
-    },
-    {
-      name: "Sumoners Rift",
+      name: "Mortk",
       tokens: initialTokens,
     },
   ],
@@ -28,7 +24,7 @@ export const initialState = {
   ],
   gameState: "playing",
   currentPlayer: 0,
-  log: ["Ready to play!"],
+  log: [{ type: "green", text: "Ready to play!" }],
 };
 
 function updateLog(state, message) {
@@ -42,7 +38,7 @@ export function reducer(state, { type, payload }) {
       const { players, currentPlayer, rows } = newState;
       const { name, row } = payload;
 
-      updateLog(newState, `${name} played ${row}!`);
+      updateLog(newState, { type: "green", text: `${name} played ${row}!` });
 
       let newTurn = currentPlayer + 1;
 
@@ -62,7 +58,10 @@ export function reducer(state, { type, payload }) {
       if (changeRow.tokens > changeRow.max) {
         whoPlayed.tokens += changeRow.max;
 
-        updateLog(newState, `${name} took ${changeRow.max} tokens`);
+        updateLog(newState, {
+          type: "red",
+          text: `${name} took ${changeRow.max} tokens`,
+        });
 
         changeRow.tokens = 0;
       } else {
@@ -71,7 +70,10 @@ export function reducer(state, { type, payload }) {
         if (whoPlayed.tokens === 0) {
           newState.gameState = "end";
 
-          updateLog(newState, `${name} won!`);
+          updateLog(newState, {
+            type: "yellow",
+            text: `${name} won!`,
+          });
         }
       }
 
