@@ -1,20 +1,10 @@
+import { connectPlayer, playerTurn } from "../utils/socket";
+
 const initialTokens = 10;
 
 export const initialState = {
-  players: [
-    {
-      name: "Link",
-      tokens: initialTokens,
-    },
-    {
-      name: "Aram",
-      tokens: initialTokens,
-    },
-    {
-      name: "Mortk",
-      tokens: initialTokens,
-    },
-  ],
+  socket: null,
+  players: [],
   rows: [
     { max: 1, tokens: 0 },
     { max: 2, tokens: 0 },
@@ -32,7 +22,37 @@ function updateLog(state, message) {
 }
 
 export function reducer(state, { type, payload }) {
+  console.info(type, payload);
   switch (type) {
+    case "CONNECTED": {
+      return {
+        ...state,
+        socket: payload,
+      };
+    }
+    case "START": {
+      const player = {
+        name: payload.name,
+        tokens: initialTokens,
+        id: state.socket,
+      };
+      const newState = {
+        ...state,
+        players: [...state.players, player],
+      };
+
+      connectPlayer(player);
+
+      return {
+        ...newState,
+      };
+    }
+    case "NEW_PLAYER": {
+      return {
+        ...state,
+        players: [...state.players, { ...payload, tokens: initialTokens }],
+      };
+    }
     case "PLAY": {
       const newState = { ...state, gameState: "playing" };
       const { players, currentPlayer, rows } = newState;
@@ -77,10 +97,28 @@ export function reducer(state, { type, payload }) {
         }
       }
 
-      return {
+      whoPlayed.lastRow = row;
+
+      const result = {
         ...newState,
         rows: newRows,
         currentPlayer: newTurn,
+      };
+
+      playerTurn({
+        rows: result.rows,
+        gameState: result.gameState,
+        log: result.log,
+        players: result.players,
+        currentPlayer: result.currentPlayer,
+      });
+
+      return result;
+    }
+    case "SYNC": {
+      return {
+        ...state,
+        ...payload,
       };
     }
     default:

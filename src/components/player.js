@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Dice from "./dice";
 
-function Player({ name, tokens, canPlay, onPlay }) {
+function Player({ name, tokens, canPlay, onPlay, lastRow }) {
   const [showRowSelector, setShowRowSelector] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState(null);
 
@@ -26,7 +26,7 @@ function Player({ name, tokens, canPlay, onPlay }) {
                 setSelectedNumber(number);
               }
             }}
-            value={selectedNumber}
+            value={selectedNumber || lastRow}
           />
         )}
         {showRowSelector &&
