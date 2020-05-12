@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from "react";
 import { initialState, reducer } from "./store/reducer";
 import "./styles.css";
 
-import { onNewPlayer, onConnect, onPlayerTurn } from "./utils/socket";
+import { onConnect, onSyncServer } from "./utils/socket";
 
 import Table from "./components/table";
 import Player from "./components/player";
@@ -15,8 +15,7 @@ export default function App() {
 
   useEffect(() => {
     onConnect((payload) => dispatch({ type: "CONNECTED", payload }));
-    onNewPlayer((payload) => dispatch({ type: "NEW_PLAYER", payload }));
-    onPlayerTurn((payload) => dispatch({ type: "SYNC", payload }));
+    onSyncServer((payload) => dispatch({ type: "SYNC", payload }));
   }, []);
 
   useEffect(() => {
